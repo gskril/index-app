@@ -1,4 +1,3 @@
-import * as Sentry from '@sentry/nextjs'
 import { useEffect, useMemo, useState } from 'react'
 import { Address, formatUnits, isAddress } from 'viem'
 import { usePublicClient } from 'wagmi'
@@ -60,15 +59,9 @@ export function usePresaleData(symbol: string): PresaleData {
     const fetchTvl = async () => {
       if (!publicClient) return
       if (!isAddress(presaleToken.address ?? '')) {
-        Sentry.captureMessage(
-          `Presale token address invalid - ${presaleToken.symbol}`,
-        )
         return
       }
       if (!isAddress(currencyToken.address ?? '')) {
-        Sentry.captureMessage(
-          `Currency token address invalid - ${currencyToken.symbol}`,
-        )
         return
       }
 
