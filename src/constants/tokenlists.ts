@@ -1,24 +1,22 @@
+import { getTokenByChainAndSymbol } from '@indexcoop/tokenlists'
+import { arbitrum, base } from 'viem/chains'
+
 import {
   BedIndex,
-  Bitcoin2xFlexibleLeverageIndex,
   CoinDeskEthTrendIndex,
   DAI,
   DefiPulseIndex,
   DiversifiedStakedETHIndex,
   ETH,
-  Ethereum2xFlexibleLeverageIndex,
-  GitcoinStakedETHIndex,
   GUSD,
   HighYieldETHIndex,
   ic21,
-  icETHIndex,
-  IndexCoopBitcoin2xIndex,
-  IndexCoopEthereum2xIndex,
   IndexToken,
   MetaverseIndex,
   RETH,
   SETH2,
   STETH,
+  Token,
   USDC,
   USDT,
   WBTC,
@@ -42,46 +40,24 @@ export const currencies = [
 ]
 
 export const indicesTokenListArbitrum = [
+  getTokenByChainAndSymbol(arbitrum.id, DefiPulseIndex.symbol),
+  getTokenByChainAndSymbol(arbitrum.id, MetaverseIndex.symbol),
+  getTokenByChainAndSymbol(arbitrum.id, HighYieldETHIndex.symbol),
+  getTokenByChainAndSymbol(arbitrum.id, DiversifiedStakedETHIndex.symbol),
+].map((token) => ({ ...token, image: token?.logoURI })) as Token[]
+
+export const indicesTokenListBase = [
+  getTokenByChainAndSymbol(base.id, HighYieldETHIndex.symbol),
+  getTokenByChainAndSymbol(base.id, DiversifiedStakedETHIndex.symbol),
+].map((token) => ({ ...token, image: token?.logoURI })) as Token[]
+
+export const indicesTokenList = [
   DefiPulseIndex,
   MetaverseIndex,
+  BedIndex,
+  CoinDeskEthTrendIndex,
   HighYieldETHIndex,
-]
-
-const isDevEnv =
-  process.env.NEXT_PUBLIC_VERCEL_ENV === 'development' ||
-  process.env.NEXT_PUBLIC_VERCEL_ENV === 'index-app-staging'
-// Keeping a separate list for dev/staging and production to be able to include
-// indices that have not been released yet.
-export const indicesTokenList = isDevEnv
-  ? [
-      IndexCoopEthereum2xIndex,
-      IndexCoopBitcoin2xIndex,
-      CoinDeskEthTrendIndex,
-      ic21,
-      DiversifiedStakedETHIndex,
-      icETHIndex,
-      GitcoinStakedETHIndex,
-      HighYieldETHIndex,
-      DefiPulseIndex,
-      MetaverseIndex,
-      Ethereum2xFlexibleLeverageIndex,
-      Bitcoin2xFlexibleLeverageIndex,
-      BedIndex,
-      IndexToken,
-    ]
-  : [
-      IndexCoopEthereum2xIndex,
-      IndexCoopBitcoin2xIndex,
-      CoinDeskEthTrendIndex,
-      ic21,
-      DiversifiedStakedETHIndex,
-      icETHIndex,
-      GitcoinStakedETHIndex,
-      HighYieldETHIndex,
-      DefiPulseIndex,
-      MetaverseIndex,
-      Ethereum2xFlexibleLeverageIndex,
-      Bitcoin2xFlexibleLeverageIndex,
-      BedIndex,
-      IndexToken,
-    ]
+  DiversifiedStakedETHIndex,
+  ic21,
+  IndexToken,
+] as Token[]
