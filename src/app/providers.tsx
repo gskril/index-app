@@ -8,13 +8,10 @@ import { WagmiProvider } from 'wagmi'
 
 import { UserMetadataProvider } from '@/app/user-metadata-provider'
 import { useUpsertUser } from '@/lib/hooks/use-upsert-user'
-import { ProtectionProvider } from '@/lib/providers/protection'
-import { SignTermsProvider } from '@/lib/providers/sign-terms-provider'
 import theme from '@/lib/styles/theme'
 import { config, metadata, projectId } from '@/lib/utils/wagmi'
 
 import '@/lib/styles/fonts'
-import { AnalyticsProvider } from './analytics-provider'
 
 const queryClient = new QueryClient()
 
@@ -42,15 +39,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
         <WagmiProvider config={config}>
           <QueryClientProvider client={queryClient}>
-            <AnalyticsProvider>
-              <ProtectionProvider>
-                <SignTermsProvider>
-                  <UserMetadataProvider value={persistentUserData}>
-                    {children}
-                  </UserMetadataProvider>
-                </SignTermsProvider>
-              </ProtectionProvider>
-            </AnalyticsProvider>
+            <UserMetadataProvider value={persistentUserData}>
+              {children}
+            </UserMetadataProvider>
           </QueryClientProvider>
         </WagmiProvider>
       </ChakraProvider>
